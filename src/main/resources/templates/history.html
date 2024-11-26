@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Historique des SMS</title>
+    <meta charset="UTF-8">
+    <style>
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #f5f5f5;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .success { color: green; }
+        .error { color: red; }
+        .nav-buttons {
+            margin-bottom: 20px;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="nav-buttons">
+        <a href="/" class="button">Nouveau SMS</a>
+    </div>
+
+    <h2>Historique des SMS envoyés</h2>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Date d'envoi</th>
+            <th>Numéro</th>
+            <th>Message</th>
+            <th>Statut</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="sms : ${messages}">
+            <td th:text="${#temporals.format(sms.sentAt, 'dd/MM/yyyy HH:mm')}"></td>
+            <td th:text="${sms.phoneNumber}"></td>
+            <td th:text="${sms.message}"></td>
+            <td th:class="${sms.success ? 'success' : 'error'}"
+                th:text="${sms.success ? 'Succès' : 'Échec'}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
